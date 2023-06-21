@@ -6,7 +6,7 @@ pipeline {
  IMAGE_REPO_NAME="jenkins-pipeline-build-demo"
  // PARAM_IMAGE_TAG ="${IMAGE_TAG}"
  // IMAGE_TAG="${GIT_COMMIT}"  
- SELECTED_IMAGE_TAG = "${IMAGE_TAG}:${BRANCH_NAME}"
+ SELECTED_IMAGE_TAG = "${IMAGE_TAG}-${BRANCH_NAME}"
  REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
  CLUSTER_NAME = "ecs-cluster"
  TASKDEF_NAME = "ecs_terraform_task_def"  
