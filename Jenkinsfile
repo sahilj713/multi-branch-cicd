@@ -9,9 +9,9 @@ pipeline {
  SELECTED_IMAGE_TAG = "${IMAGE_TAG}-${BRANCH_NAME}"
  BRANCH = "${BRANCH_NAME}" 
  REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
- CLUSTER_NAME = "ecs-cluster"
- TASKDEF_NAME = "ecs_terraform_task_def"  
- SERVICE_NAME = "ecs_terraform_service"  
+ CLUSTER_NAME = "cluster-${ENVIRONMENT}"
+ TASKDEF_NAME = "task-${ENVIRONMENT}"  
+ SERVICE_NAME = "service-${ENVIRONMENT}"  
  }
  
  stages {
