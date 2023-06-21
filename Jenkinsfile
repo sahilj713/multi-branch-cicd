@@ -50,41 +50,30 @@ pipeline {
  }
   
  
+ stage('manual-approval'){
+  when {
+        expression {
+          BRANCH == 'prod' || BRANCH == 'uat'
+        }
+      }
+      steps {
+        echo 'Deploying...'
+        input message: 'Do you want to deploy to production? (y/n)'
+      }
+ } 
+ 
  stage('deploy to ecs') {
-  when {
-        expression {
-          branch == 'prod' || branch == 'uat'
-        }
-      }
-       steps{
-         echo 'Deploying...'
-         input message: 'Do you want to deploy to production? (y/n)'
-         script {
-         sh "aws ecs describe-task-definition --task-definition ${ TASKDEF_NAME } > task-def.json"
-         sh "jq .taskDefinition task-def.json > taskdefinition.json"
-         sh "jq 'del(.taskDefinitionArn)' taskdefinition.json | jq 'del(.revision)' | jq 'del(.status)' | jq 'del(.requiresAttributes)' | jq 'del(.compatibilities)' | jq 'del(.registeredAt)'| jq 'del(.registeredBy)' > container-definition.json"
-         sh "jq '.containerDefinitions[0].image = \"${REPOSITORY_URI}:${SELECTED_IMAGE_TAG}\"' container-definition.json > temp-taskdef.json"  
-         sh "aws ecs register-task-definition --cli-input-json file://container-definition.json"  
-         sh "aws ecs update-service --cluster  ${ CLUSTER_NAME } --service  ${ SERVICE_NAME } --task-definition  ${ TASKDEF_NAME }"
-         }
-         }
-  
-  when {
-        expression {
-          branch == 'dev'
-        }
-      }
-       steps{
-         script {
-         sh "aws ecs describe-task-definition --task-definition ${ TASKDEF_NAME } > task-def.json"
-         sh "jq .taskDefinition task-def.json > taskdefinition.json"
-         sh "jq 'del(.taskDefinitionArn)' taskdefinition.json | jq 'del(.revision)' | jq 'del(.status)' | jq 'del(.requiresAttributes)' | jq 'del(.compatibilities)' | jq 'del(.registeredAt)'| jq 'del(.registeredBy)' > container-definition.json"
-         sh "jq '.containerDefinitions[0].image = \"${REPOSITORY_URI}:${SELECTED_IMAGE_TAG}\"' container-definition.json > temp-taskdef.json"  
-         sh "aws ecs register-task-definition --cli-input-json file://container-definition.json"  
-         sh "aws ecs update-service --cluster  ${ CLUSTER_NAME } --service  ${ SERVICE_NAME } --task-definition  ${ TASKDEF_NAME }"
-         }
-         }
- }  
+  steps{
+  script {
+  sh "aws ecs describe-task-definition --task-definition ${ TASKDEF_NAME } > task-def.json"
+  sh "jq .taskDefinition task-def.json > taskdefinition.json"
+  sh "jq 'del(.taskDefinitionArn)' taskdefinition.json | jq 'del(.revision)' | jq 'del(.status)' | jq 'del(.requiresAttributes)' | jq 'del(.compatibilities)' | jq 'del(.registeredAt)'| jq 'del(.registeredBy)' > container-definition.json"
+  sh "jq '.containerDefinitions[0].image = \"${REPOSITORY_URI}:${SELECTED_IMAGE_TAG}\"' container-definition.json > temp-taskdef.json"  
+  sh "aws ecs register-task-definition --cli-input-json file://container-definition.json"  
+  sh "aws ecs update-service --cluster  ${ CLUSTER_NAME } --service  ${ SERVICE_NAME } --task-definition  ${ TASKDEF_NAME }"
+    }
+   }
+  }     
  
  
  }
