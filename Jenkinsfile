@@ -7,6 +7,7 @@ pipeline {
  // PARAM_IMAGE_TAG ="${IMAGE_TAG}"
  // IMAGE_TAG="${GIT_COMMIT}"  
  SELECTED_IMAGE_TAG = "${IMAGE_TAG}-${BRANCH_NAME}"
+ BRANCH = "${BRANCH_NAME}" 
  REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
  CLUSTER_NAME = "ecs-cluster"
  TASKDEF_NAME = "ecs_terraform_task_def"  
@@ -42,7 +43,7 @@ pipeline {
  stage('Pushing to ECR') {
  steps{ 
  script {
- sh "docker tag ${IMAGE_REPO_NAME}:${SELECTED_IMAGE_TAG} ${REPOSITORY_URI}:$IMAGE_TAG"
+ sh "docker tag ${IMAGE_REPO_NAME}:${SELECTED_IMAGE_TAG} ${REPOSITORY_URI}:$SELECTED_IMAGE_TAG"
  sh "docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${SELECTED_IMAGE_TAG}"
  }
  }
