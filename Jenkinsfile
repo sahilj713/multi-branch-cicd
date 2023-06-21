@@ -51,9 +51,10 @@ pipeline {
   
  
  stage('deploy to ecs') {
-    if (branch == 'prod' || branch == 'uat'){
+    
         
        steps{
+        if (branch == 'prod' || branch == 'uat'){
          echo 'Deploying...'
          input message: 'Do you want to deploy to production? (y/n)'
          script {
@@ -65,8 +66,7 @@ pipeline {
          sh "aws ecs update-service --cluster  ${ CLUSTER_NAME } --service  ${ SERVICE_NAME } --task-definition  ${ TASKDEF_NAME }"
          }
          }
-     }else{
-       steps{
+     else{
          script {
          sh "aws ecs describe-task-definition --task-definition ${ TASKDEF_NAME } > task-def.json"
          sh "jq .taskDefinition task-def.json > taskdefinition.json"
