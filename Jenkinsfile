@@ -1,4 +1,5 @@
-def buildUser = currentBuild.rawBuild.getCause(hudson.model.Cause$UserIdCause).getUserName()
+//def buildUser = currentBuild.rawBuild.getCause(hudson.model.Cause$UserIdCause).getUserName()
+
 pipeline {
  agent any
  environment {
@@ -66,6 +67,8 @@ pipeline {
       steps {
         // sh "env"
         input message: 'Do you approve?', submitter: 'sahil'
+       BUILD_TRIGGER_BY = currentBuild.getBuildCauses()[0].shortDescription + " / " + currentBuild.getBuildCauses()[0].userId
+       echo "BUILD_TRIGGER_BY: ${BUILD_TRIGGER_BY}"
        // script{
        // def buildUser = input message:'who are you?'
        // echo "${buildUser}"
