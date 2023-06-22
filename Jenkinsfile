@@ -71,6 +71,7 @@ pipeline {
         // echo ${env.submitterParameter}
       }
     }
+ }
     stage('Check approval') {
       steps {
         script {
