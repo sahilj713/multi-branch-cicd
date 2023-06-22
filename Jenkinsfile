@@ -51,41 +51,41 @@ pipeline {
 //  }
 //  }
 
- // stage('manual-approval'){
- //  when {
- //        expression {
- //          BRANCH == 'prod' || BRANCH == 'uat'
- //        }
- //      }
- //      steps {
- //        echo 'Deploying...'
- //        input message: 'Do you want to deploy to production? (y/n)'
- //      }
- // } 
-
- stage('Ask for approval') {
-      steps {
-        // sh "env"
-        input message: 'Do you approve?', ok:'proceed' ,submitter: 'Sarvesh05k'
-       // BUILD_TRIGGER_BY = currentBuild.getBuildCauses()[0].shortDescription + " / " + currentBuild.getBuildCauses()[0].userId
-       // echo "BUILD_TRIGGER_BY: ${BUILD_TRIGGER_BY}"
-       // script{
-       // def buildUser = input message:'who are you?'
-       // echo "${buildUser}"
-        // echo ${env.submitterParameter}
-      // }
-    }
- }
-    stage('Check approval') {
-      steps {
-        script {
-        // def buildUser = currentBuild.rawBuild.getCause(hudson.model.Cause$UserIdCause).getUserName()
-        if (buildUser == submitter){
-         sh "env"
-        }
+ stage('manual-approval'){
+  when {
+        expression {
+          BRANCH == 'prod' || BRANCH == 'uat'
         }
       }
-    } 
+      steps {
+        echo 'Deploying...'
+        input message: 'Do you want to deploy to production? (y/n)', submitter:'sahil'
+      }
+ } 
+
+ // stage('Ask for approval') {
+ //      steps {
+ //        // sh "env"
+ //        input message: 'Do you approve?', ok:'proceed' ,submitter: 'Sarvesh05k'
+ //       // BUILD_TRIGGER_BY = currentBuild.getBuildCauses()[0].shortDescription + " / " + currentBuild.getBuildCauses()[0].userId
+ //       // echo "BUILD_TRIGGER_BY: ${BUILD_TRIGGER_BY}"
+ //       // script{
+ //       // def buildUser = input message:'who are you?'
+ //       // echo "${buildUser}"
+ //        // echo ${env.submitterParameter}
+ //      // }
+ //    }
+ // }
+    // stage('Check approval') {
+    //   steps {
+    //     script {
+    //     // def buildUser = currentBuild.rawBuild.getCause(hudson.model.Cause$UserIdCause).getUserName()
+    //     if (buildUser == submitter){
+    //      sh "env"
+    //     }
+    //     }
+    //   }
+    // } 
  
  stage('deploy to ecs') {
   steps{
