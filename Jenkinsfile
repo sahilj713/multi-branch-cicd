@@ -63,7 +63,7 @@ pipeline {
 
  stage('Ask for approval') {
       steps {
-        input message: 'Do you approve?', submitter: 'sahil'
+        input message: 'Do you approve?', submitter: 'sahil jain'
       }
     }
     stage('Check approval') {
