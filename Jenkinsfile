@@ -63,22 +63,23 @@ pipeline {
 
  stage('Ask for approval') {
       steps {
-        input message: 'Do you approve?', submitter: 'jahil jain'
+        input message: 'Do you approve?', submitter: 'jahil jain' , submitterParameter: 'approver'
+        echo ${env.approver}
       }
     }
-    stage('Check approval') {
-      steps {
-        script {
-          def buildUser = currentBuild.rawBuild.getCause(hudson.model.Cause$UserIdCause).getUserName()
-          def approvalUser = input(id: 'approval', message: 'Approved by?', submitterParameter: 'approver')
-          if (buildUser == approvalUser) {
-            echo 'User who started the build is the same as the user who approved the input'
-          } else {
-            echo 'User who started the build is different from the user who approved the input'
-          }
-        }
-      }
-    } 
+    // stage('Check approval') {
+    //   steps {
+    //     script {
+    //       def buildUser = currentBuild.rawBuild.getCause(hudson.model.Cause$UserIdCause).getUserName()
+    //       def approvalUser = input(id: 'approval', message: 'Approved by?', submitterParameter: 'approver')
+    //       if (buildUser == approvalUser) {
+    //         echo 'User who started the build is the same as the user who approved the input'
+    //       } else {
+    //         echo 'User who started the build is different from the user who approved the input'
+    //       }
+    //     }
+    //   }
+    // } 
  
  stage('deploy to ecs') {
   steps{
