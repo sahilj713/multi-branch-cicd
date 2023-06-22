@@ -64,7 +64,9 @@ pipeline {
  stage('Ask for approval') {
       steps {
         // sh "env"
-        input message: 'Do you approve?', submitter: 'sa'
+        input message: 'Do you approve?', submitter: 'sahil'
+       def buildUser = currentBuild.rawBuild.getCause(hudson.model.Cause$UserIdCause).getUserName()
+       echo "${buildUser}"
         // echo ${env.submitterParameter}
       }
     }
