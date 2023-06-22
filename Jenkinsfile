@@ -60,7 +60,7 @@ pipeline {
       steps {
         echo 'Deploying...'
         script{
-        def user = input message: 'Do you want to deploy to production? (y/n)', submitter:'Sarvesh05k', submitterParameter: 'id'
+        def user = input message: 'Do you want to deploy to production? (y/n)', submitter:'Sarvesh05k', submitterParameter:'id'
         }
        echo "${user.id}"
       }
