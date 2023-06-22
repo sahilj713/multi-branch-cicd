@@ -65,11 +65,11 @@ pipeline {
       steps {
         // sh "env"
         input message: 'Do you approve?', submitter: 'sahil'
-       script{
-       sh "def buildUser = input message:'who are you?'"
-       sh "buildUser"
+       // script{
+       def buildUser = input message:'who are you?'
+       echo "${buildUser}"
         // echo ${env.submitterParameter}
-      }
+      // }
     }
  }
     stage('Check approval') {
