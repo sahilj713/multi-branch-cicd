@@ -64,7 +64,7 @@ pipeline {
  stage('Ask for approval') {
       steps {
         input message: 'Do you approve?', submitter: 'sahil' , submitterParameter: 'approver'
-        echo ${env.submitter}
+        echo ${env.submitterParameter}
       }
     }
     // stage('Check approval') {
