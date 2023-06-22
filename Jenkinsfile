@@ -66,7 +66,7 @@ pipeline {
  stage('Ask for approval') {
       steps {
         // sh "env"
-        input message: 'Do you approve?', submitter: 'Sarvesh05k'
+        input message: 'Do you approve?', ok:'proceed' ,submitter: 'Sarvesh05k'
        // BUILD_TRIGGER_BY = currentBuild.getBuildCauses()[0].shortDescription + " / " + currentBuild.getBuildCauses()[0].userId
        // echo "BUILD_TRIGGER_BY: ${BUILD_TRIGGER_BY}"
        // script{
