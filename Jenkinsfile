@@ -59,10 +59,10 @@ pipeline {
       }
       steps {
         echo 'Deploying...'
-        
-        input message: 'Do you want to deploy to production? (y/n)', submitter:'Sarvesh05k', submitterParameter: 'id'
-        echo "${env.id}"
-      }
+        script{
+        def user = input message: 'Do you want to deploy to production? (y/n)', submitter:'Sarvesh05k', submitterParameter: 'id'
+        echo "${user.id}"
+      }}
  } 
 
  // stage('Ask for approval') {
