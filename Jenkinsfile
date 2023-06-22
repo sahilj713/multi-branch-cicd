@@ -1,3 +1,4 @@
+def buildUser = currentBuild.rawBuild.getCause(hudson.model.Cause$UserIdCause).getUserName()
 pipeline {
  agent any
  environment {
@@ -66,8 +67,8 @@ pipeline {
         // sh "env"
         input message: 'Do you approve?', submitter: 'sahil'
        // script{
-       def buildUser = input message:'who are you?'
-       echo "${buildUser}"
+       // def buildUser = input message:'who are you?'
+       // echo "${buildUser}"
         // echo ${env.submitterParameter}
       // }
     }
@@ -75,7 +76,7 @@ pipeline {
     stage('Check approval') {
       steps {
         script {
-        def buildUser = currentBuild.rawBuild.getCause(hudson.model.Cause$UserIdCause).getUserName()
+        // def buildUser = currentBuild.rawBuild.getCause(hudson.model.Cause$UserIdCause).getUserName()
         if (buildUser == submitter){
          sh "env"
         }
