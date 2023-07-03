@@ -29,7 +29,7 @@ pipeline {
  stage('Building image') {
  steps{
  script {
- sh "docker build -t '${IMAGE_REPO_NAME}:${SELECTED_IMAGE_TAG}' "  
+ sh "docker build -t '${IMAGE_REPO_NAME}:${SELECTED_IMAGE_TAG}' ."  
  }
  }
  }
